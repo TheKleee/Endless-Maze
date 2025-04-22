@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 216aa530dfa97454c8849b74085db01f
+timeCreated: 1522053752
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 115071
+  packageName: Sand Brick Texture
+  packageVersion: 1.0
+  assetPath: Assets/SandBrick1/PNG/Materials/boulder sand seam.mat
+  uploadId: 240628
