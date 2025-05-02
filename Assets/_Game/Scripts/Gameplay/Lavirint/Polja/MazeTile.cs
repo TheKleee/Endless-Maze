@@ -17,17 +17,23 @@ public class MazeTile : MonoBehaviour
     public int id { get; private set; }
     Vector3 tilePos = Vector3.zero;
 
+    public bool visited = false;
+
+
     private void Awake()
     {
         tileSize = (int)transform.GetChild(0).localScale.x;
     }
 
-    void CutWall(int id)
+    public void CutWall(int wallID)
     {
-        //TODO: Prilikom prolaska kroz maze, proveravamo da li smo bili na tom id-u
+        //TODO: Prilikom prolaska kroz lavirint, proveravamo da li smo bili na tom id-u
         //ako nismo mozemo da isecemo jedan zid i pomerimo se ka toj lokaciji, ili se pomerimo na lokaciju i uklonimo taj zid. (zavisi od id-a)
+        Walls[wallID].SetActive(false);
     }
 
+
+    #region Ostalo
     public void PlaceTile(int id, int n, bool walkable)
     {
         this.id = id;
@@ -53,4 +59,5 @@ public class MazeTile : MonoBehaviour
                 c.GetComponent<Renderer>().material = walkMat;
         }
     }
+    #endregion ostalo />
 }

@@ -387,7 +387,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 742931450073945632, guid: 029672f448e997d408aabcf034d77551, type: 3}
       propertyPath: mazeSize
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5515592349153257202, guid: 029672f448e997d408aabcf034d77551, type: 3}
       propertyPath: m_LocalPosition.x

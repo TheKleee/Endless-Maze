@@ -11,10 +11,15 @@ public class Maze : MonoBehaviour
     bool walkable = false;
     [SerializeField] GameObject skyDome;
     bool skyDomeSet = false;
+
+    MazePath mazePath;
+
     private void Awake() => CreateMaze();
     
     void CreateMaze()
     {
+        mazePath = GetComponent<MazePath>();
+        mazePath.mazeSize = mazeSize;
         for (int i = 1; i <= mazeSize; i++)
             for (int j = 1; j <= mazeSize; j++)
             {
@@ -22,6 +27,8 @@ public class Maze : MonoBehaviour
                 CreateNode(tileID, mazeSize, walkable);
                 tileID++;
             }
+
+        mazePath.GenerateMazePath();
     }
 
 
@@ -30,8 +37,8 @@ public class Maze : MonoBehaviour
         MazeTile node = Instantiate(mazeTile);
         node.transform.parent = transform;
         node.PlaceTile(id, n, walkable);
-        if (!skyDomeSet)
-            SkyDomePosition(node.tileSize);
+        mazePath.AddMazeTile(node);
+        if (!skyDomeSet) SkyDomePosition(node.tileSize);
     }
 
     void SkyDomePosition(int tileSize)
