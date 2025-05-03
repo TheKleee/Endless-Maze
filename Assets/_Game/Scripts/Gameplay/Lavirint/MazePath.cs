@@ -10,13 +10,30 @@ public class MazePath : MonoBehaviour
     Stack<MazeTile> currentPath = new Stack<MazeTile>();
     int formerTileID;
     public int mazeSize { private get; set; }
+    public MazeGoal goal { private get; set; }
+    int maxDepth = 0;
+    MazeTile keyTile;
 
-    public void GenerateMazePath() => 
-        GenerateMazePath(mazeTiles[mazeSize + 2]);
+    public void GenerateMazePath()
+    {
+        MazeTile tile = mazeTiles[mazeSize + 1];
+        Debug.Log("Door: " + tile.id);
+        goal.SpawnGoal(tile); //Vrata se pojavljuju na pocetku kod igraca.
+        GenerateMazePath(tile);
+        goal.SpawnGoal(keyTile, true); //Kljuc se pojavljuje na najdubljoj lokaciji u lavirintu.
+        Debug.Log("Key: " + keyTile.id);
+    }
 
     private void GenerateMazePath(MazeTile tile)
     {
         tile.visited = true;
+        Debug.Log($"Visited: {tile.id}");
+
+        if (currentPath.Count > maxDepth)
+        {
+            maxDepth = currentPath.Count;
+            keyTile = tile;
+        }
         if (!currentPath.Contains(tile))
             currentPath.Push(tile);
 
@@ -28,7 +45,6 @@ public class MazePath : MonoBehaviour
         {
             if (currentPath.Count > 1)
             {
-                Debug.Log(currentPath.Count);
                 currentPath.Pop();
                 GenerateMazePath(currentPath.Peek());
             }

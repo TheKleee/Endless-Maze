@@ -18,8 +18,7 @@ public class Maze : MonoBehaviour
     
     void CreateMaze()
     {
-        mazePath = GetComponent<MazePath>();
-        mazePath.mazeSize = mazeSize;
+        MazePathSetup();
         for (int i = 1; i <= mazeSize; i++)
             for (int j = 1; j <= mazeSize; j++)
             {
@@ -31,10 +30,17 @@ public class Maze : MonoBehaviour
         mazePath.GenerateMazePath();
     }
 
+    void MazePathSetup()
+    {
+        mazePath = GetComponent<MazePath>();
+        mazePath.goal = GetComponent<MazeGoal>();
+        mazePath.mazeSize = mazeSize;
+    }
 
     void CreateNode(int id, int n, bool walkable)
     {
         MazeTile node = Instantiate(mazeTile);
+        node.name = "Maze Tile " + id;
         node.transform.parent = transform;
         node.PlaceTile(id, n, walkable);
         mazePath.AddMazeTile(node);
