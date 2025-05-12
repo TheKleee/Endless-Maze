@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class ButtonPress : MonoBehaviour
     }
 
     public void quitGame(){
+        Debug.Log("QUIT");
         Application.Quit();
 
 
