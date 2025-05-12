@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5515592349153257202}
   - component: {fileID: 742931450073945632}
   - component: {fileID: 58894146398909039}
+  - component: {fileID: 3921597646474604596}
   m_Layer: 0
   m_Name: Maze
   m_TagString: Untagged
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeTile: {fileID: 2775385414974154723, guid: 6c6c88db5bf9ed2409b8aeba3ae146e2, type: 3}
-  mazeSize: 7
+  mazeSize: 11
   skyDome: {fileID: 3617771755555651155}
 --- !u!114 &58894146398909039
 MonoBehaviour:
@@ -61,6 +62,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd5f3d756ffc09499fb6a3a7c4ec28e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mazeTiles: []
+--- !u!114 &3921597646474604596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570698183542134289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487f5ab48655d5340b25472f61eb4159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mazeDoor: {fileID: 3767004606336358370, guid: d420fd8443db522499d21bfb80a0fa52, type: 3}
+  mazeKey: {fileID: -1481289036278870754, guid: a440f4de5a77ace47802e6b64e261c38, type: 3}
 --- !u!1001 &3617771755555551479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76,6 +92,18 @@ PrefabInstance:
     - target: {fileID: 100004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.22
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
       propertyPath: m_LocalPosition.x
@@ -116,6 +144,10 @@ PrefabInstance:
     - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 1340630fb7a3267499177be33f281f05, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 1340630fb7a3267499177be33f281f05, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

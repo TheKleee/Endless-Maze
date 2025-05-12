@@ -17,17 +17,17 @@ public class MazePath : MonoBehaviour
     public void GenerateMazePath()
     {
         MazeTile tile = mazeTiles[mazeSize + 1];
-        Debug.Log("Door: " + tile.id);
+        //Debug.Log("Door: " + tile.id);
         goal.SpawnGoal(tile); //Vrata se pojavljuju na pocetku kod igraca.
         GenerateMazePath(tile);
         goal.SpawnGoal(keyTile, true); //Kljuc se pojavljuje na najdubljoj lokaciji u lavirintu.
-        Debug.Log("Key: " + keyTile.id);
+        //Debug.Log("Key: " + keyTile.id);
     }
 
     private void GenerateMazePath(MazeTile tile)
     {
         tile.visited = true;
-        Debug.Log($"Visited: {tile.id}");
+        //Debug.Log($"Visited: {tile.id}");
 
         if (currentPath.Count > maxDepth)
         {
