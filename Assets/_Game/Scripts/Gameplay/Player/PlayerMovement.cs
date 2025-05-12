@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("Animator:"), SerializeField]
     Animator anim;
 
-    Rigidbody rb;
     public bool hasKey { get; private set; }
     bool startMoving;
     [SerializeField, Range(0.2f, 5.0f)] float startSpeed = 1f;
@@ -29,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         curSpeed = startSpeed;
-        rb = GetComponent<Rigidbody>();
         cam = cam == null ? GetComponentInChildren<Camera>() : cam;
         anim = anim == null ? GetComponentInChildren<Animator>() : anim;
     }
@@ -45,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Move();
+        cam.fieldOfView = PercentageLock.instance.ReadPercentageLock(60, 90);
     }
 
     #region Movement
@@ -52,13 +51,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") == 0)
         {
-            curSpeed = startSpeed;
+            DecreaseSpeed();
+            PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
         }
 
         if (Input.GetAxis("Vertical") > 0)
         {
             transform.Translate(F.localPosition * curSpeed * Time.fixedDeltaTime);
-
+            PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
             if (curSpeed < maxSpeed)
             {
                 curSpeed += 0.1f;
@@ -72,6 +72,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxis("Vertical") < 0)
         {
             transform.Translate(B.localPosition * startSpeed * Time.fixedDeltaTime);
+            DecreaseSpeed();
+            PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
         }
         if (Input.GetAxis("Horizontal") > 0)
         {
@@ -89,6 +91,14 @@ public class PlayerMovement : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, startSpeed * Time.deltaTime);
         }
+    }
+
+    void DecreaseSpeed()
+    {
+        if (curSpeed > startSpeed)
+            curSpeed -= 0.1f;
+        else
+            curSpeed = startSpeed;
     }
     #endregion movement />
 
