@@ -388,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeDoor: {fileID: 3767004606336358370, guid: d420fd8443db522499d21bfb80a0fa52, type: 3}
   mazeKey: {fileID: 7360542332867433437, guid: a440f4de5a77ace47802e6b64e261c38, type: 3}
---- !u!1001 &4973024272712853181
+--- !u!1001 &8106880641700881510
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -396,48 +396,60 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8594619478529680042, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 4650065671123579079, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 4991789696804348701, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991789696804348701, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8939056256029194256, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+    - target: {fileID: 5085220454330083567, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453114607450125632, guid: 86ff2902c0110e84a9187ad2da166546, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -451,5 +463,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 4973024272712853181}
+  - {fileID: 8106880641700881510}
   - {fileID: 582268480}
