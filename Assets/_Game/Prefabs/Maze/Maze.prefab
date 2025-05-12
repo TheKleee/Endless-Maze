@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeTile: {fileID: 2775385414974154723, guid: 6c6c88db5bf9ed2409b8aeba3ae146e2, type: 3}
-  mazeSize: 13
+  mazeSize: 11
   skyDome: {fileID: 3617771755555651155}
 --- !u!114 &58894146398909039
 MonoBehaviour:
