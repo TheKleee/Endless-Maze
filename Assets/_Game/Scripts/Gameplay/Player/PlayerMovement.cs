@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Hand:"), SerializeField]
     Transform pickUpHand;
-
+    bool running;
     void Awake()
     {
         curSpeed = startSpeed;
@@ -51,12 +51,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetAxis("Vertical") == 0)
         {
+            if (running)
+                running = false;
+            if (anim.GetBool("Backwards"))
+                anim.SetBool("Backwards", false);
             DecreaseSpeed();
             PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
         }
 
         if (Input.GetAxis("Vertical") > 0)
         {
+            if (!running)
+                running = true;
+            if (anim.GetBool("InPlace"))
+                anim.SetBool("InPlace", false);
+            if (anim.GetBool("Backwards"))
+                anim.SetBool("Backwards", false);
+            anim.SetFloat("Blend", PercentageLock.instance.ReadPercentageLock(0, 1));
             transform.Translate(F.localPosition * curSpeed * Time.fixedDeltaTime);
             PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
             if (curSpeed < maxSpeed)
@@ -71,12 +82,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetAxis("Vertical") < 0)
         {
+            if(!running)
+                running = true;
+            if (anim.GetBool("InPlace"))
+                anim.SetBool("InPlace", false);
+            if (!anim.GetBool("Backwards"))
+                anim.SetBool("Backwards", true);
             transform.Translate(B.localPosition * startSpeed * Time.fixedDeltaTime);
             DecreaseSpeed();
             PercentageLock.instance.SetPercentageLock(curSpeed, startSpeed, maxSpeed);
         }
         if (Input.GetAxis("Horizontal") > 0)
         {
+            if (!anim.GetBool("InPlace") && !running)
+                anim.SetBool("InPlace", true);
+            if (anim.GetBool("InPlace"))
+                anim.Play("Right");
             var lookPos = R.position - transform.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
@@ -86,15 +107,26 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetAxis("Horizontal") < 0)
         {
+            if (!anim.GetBool("InPlace") && !running)
+                anim.SetBool("InPlace", true);
+            if (anim.GetBool("InPlace"))
+                anim.Play("Left");
             var lookPos = L.position - transform.position;
             lookPos.y = 0;
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, startSpeed * Time.deltaTime);
         }
+
+        if(Input.GetAxis("Horizontal") == 0)
+        {
+            if (anim.GetBool("InPlace"))
+                anim.SetBool("InPlace", false);
+        }
     }
 
     void DecreaseSpeed()
     {
+        anim.SetFloat("Blend", 0);
         if (curSpeed > startSpeed)
             curSpeed -= 0.1f;
         else
