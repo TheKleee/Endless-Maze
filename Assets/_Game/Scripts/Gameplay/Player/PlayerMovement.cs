@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
 
     Rigidbody rb;
-    bool hasKey, startMoving;
+    public bool hasKey { get; private set; }
+    bool startMoving;
     [SerializeField] float maxSpeed = 5.0f;
     float curSpeed;
     
@@ -66,16 +67,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion movement />
 
     #region Key
-    private void OnTriggerEnter(Collider other)
-    {
-        if (hasKey)
-            return;
-
-        if (other.tag == "Key")
-            CollectKey(other.transform);
-    }
-
-    void CollectKey(Transform key)
+    public void CollectKey(Transform key)
     {
         hasKey = true;
         key.parent = pickUpHand;
@@ -83,5 +75,4 @@ public class PlayerMovement : MonoBehaviour
         anim.Play("PickUp");
     }
     #endregion key />
-
 }
