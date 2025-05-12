@@ -1,9 +1,6 @@
 using UnityEngine;
 using MEC;
-using System.Collections;
-using Unity.VisualScripting;
 using System.Collections.Generic;
-using System.Resources;
 
 public class CameraMovement : MonoBehaviour
 {
