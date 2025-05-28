@@ -9,6 +9,7 @@ using TMPro;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEditor.MemoryProfiler;
+using EM_Hashing;
 
 
 public class DBCon : MonoBehaviour
@@ -28,9 +29,7 @@ public class DBCon : MonoBehaviour
     {
         DBManager.instance.Error();
         string username = DBManager.instance.username;
-        string password = BitConverter.ToString(new SHA256Managed()
-            .ComputeHash(Encoding.UTF8.GetBytes(DBManager.instance.password))).Replace("-", "")
-            .ToLower();
+        string password = DBManager.instance.password.Hash();
 
         using MySqlConnection connection = new MySqlConnection(connectionString);
         connection.Open();
@@ -80,9 +79,7 @@ public class DBCon : MonoBehaviour
         DBManager.instance.Error(check ? "" : e);
         
         string username = DBManager.instance.username;
-        string password = BitConverter.ToString(new SHA256Managed()
-            .ComputeHash(Encoding.UTF8.GetBytes(DBManager.instance.password))).Replace("-", "")
-            .ToLower();
+        string password = DBManager.instance.password.Hash();
 
         DBManager.instance.Error(DBManager.instance.CheckUsername(IsUsernameTaken(username)));
 
