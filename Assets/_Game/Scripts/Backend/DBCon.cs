@@ -35,46 +35,34 @@ public class DBCon : MonoBehaviour
         using MySqlConnection connection = new MySqlConnection(connectionString);
         connection.Open();
         using MySqlCommand command = connection.CreateCommand();
-        try
-        {
-            command.CommandText = "SELECT COUNT(*) FROM Players WHERE username = @username";
-            command.Parameters.AddWithValue("@username", username);
-            var result = Convert.ToInt32(command.ExecuteScalar());
+        
+        command.CommandText = "SELECT COUNT(*) FROM Players WHERE username = @username";
+        command.Parameters.AddWithValue("@username", username);
+        var result = Convert.ToInt32(command.ExecuteScalar());
 
+        if (result <= 0)
+        {
+            DBManager.instance.Error("Username not found");
+            return false;
+        }
+        else
+        {
+            command.CommandText = "SELECT COUNT(*) FROM Players WHERE username = @username AND password = @password ";
+            command.Parameters.AddWithValue("@password", password);
+            result = Convert.ToInt32(command.ExecuteScalar());
             if (result <= 0)
             {
-                DBManager.instance.Error("Username not found");
+                DBManager.instance.Error("Incorrect password");
+                connection.Close();
                 return false;
             }
             else
             {
-                command.CommandText = "SELECT COUNT(*) FROM Players WHERE username = @username AND password = @password ";
-                command.Parameters.AddWithValue("@password", password);
-                result = Convert.ToInt32(command.ExecuteScalar());
-                if (result <= 0)
-                {
-                    DBManager.instance.Error("Incorrect password");
-                    connection.Close();
-                    return false;
-                }
-                else
-                {
-                    player = username;
-                    SceneManager.LoadScene("Main Menu");
-                    connection.Close();
-                    return true;
-                }
+                player = username;
+                connection.Close();
+                return true;
             }
         }
-        catch (Exception ex)
-        {
-            DBManager.instance.Error(ex.Message);
-            return false;
-        }
-        finally 
-        { 
-            connection.Close();
-        }        
     }
 
     public void OnClickRegisterFromLogin()
@@ -93,12 +81,14 @@ public class DBCon : MonoBehaviour
             DBManager.instance.Error("Username and password fields cannot be empty");
         
         (bool check, string e) = DBManager.instance.CheckPassword();
-            DBManager.instance.Error(check ? "" : e);
+        DBManager.instance.Error(check ? "" : e);
 
-        if (DBManager.instance.CheckError())
-            return false;
+        Debug.Log(DBManager.instance.CheckError() + "\n" + DBManager.instance.error);
 
         DBManager.instance.Error(DBManager.instance.CheckUsername(IsUsernameTaken(username)));
+        
+        if (DBManager.instance.CheckError())
+            return false;
 
         password = password.Hash();
 
@@ -115,7 +105,7 @@ public class DBCon : MonoBehaviour
             command.ExecuteNonQuery();
             return true;
         }
-        catch (Exception ex)
+        catch (MySqlException ex)
         {
             DBManager.instance.Error(ex.Message);
             return false;
@@ -136,7 +126,7 @@ public class DBCon : MonoBehaviour
         {
             command.CommandText = "SELECT Count(*) FROM Players WHERE username=@username";
             command.Parameters.AddWithValue("@username", username);
-        
+            Debug.Log(command.ExecuteScalar());
             return Convert.ToInt32(command.ExecuteScalar()) > 0;
         }
         catch (MySqlException ex)

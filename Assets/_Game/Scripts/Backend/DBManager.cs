@@ -28,7 +28,8 @@ public interface IRegisterManager
 {
     public delegate bool RegisterPlayer();
     public event RegisterPlayer registerPlayer;
-    public event RegisterPlayer postRegister;
+    public delegate void PostRegister();
+    public event PostRegister postRegister;
     public void Register();
 }
 
@@ -36,7 +37,8 @@ public interface ILoginManager
 {
     public delegate bool LoginPlayer();
     public event LoginPlayer loginPlayer;
-    public event LoginPlayer postLogin;
+    public delegate void PostLogin();
+    public event PostLogin postLogin;
     public void Login();
 }
 
@@ -46,9 +48,14 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public static DBManager instance;
     private void Awake()
     {
-        instance ??= this;
-        DontDestroyOnLoad(gameObject);
-        username = password = confirm = "";
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            username = password = confirm = "";
+            return;
+        }
+        Destroy(gameObject);
     }
     #endregion singleton />
 
@@ -61,13 +68,18 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public event IDBError.DisplayError displayError;
     public event IRegisterManager.RegisterPlayer registerPlayer;
     public event ILoginManager.LoginPlayer loginPlayer;
-    public event IRegisterManager.RegisterPlayer postRegister;
-    public event ILoginManager.LoginPlayer postLogin;
+    public event IRegisterManager.PostRegister postRegister;
+    public event ILoginManager.PostLogin postLogin;
 
     #region Error
-    public void Error(string e = "clear")
+    public void Error(string e)
     {
-        error = e == "clear" ? "" : $"{error}{e}\n";
+        error = error.Length > 1 && e == "" ? $"{e}\n" : "";
+        displayError?.Invoke();
+    }
+    public void Error()
+    {
+        error = "";
         displayError?.Invoke();
     }
     public bool CheckError() => error.Length > 0;

@@ -2,6 +2,7 @@ using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
 using TMPro;
+using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviour
 {
@@ -31,31 +32,8 @@ public class MenuManager : MonoBehaviour
     public void SetPassword(int id = 0) => DBManager.instance.password = password[id].text;
     public void SetConfirm() => DBManager.instance.confirm = confirm.text; //Confirm password
 
-    public bool Login()
-    {
-        try
-        {
-            DisplayMenu(2);
-            return true;
-        }
-        catch
-        { 
-            return false;
-        }
-    }
-
-    public bool Register()
-    {
-        try
-        {
-            DisplayMenu(0);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+    public void Login() => DisplayMenu(2);
+    public void Register() => DisplayMenu(0);
     #endregion methods />
 
     #region Menu Navigation:
@@ -65,29 +43,34 @@ public class MenuManager : MonoBehaviour
     #region Display
     public void DisplayMenu(int id = 0)
     {
+        DBManager.instance.Error();
         DisplayError();
+        ClearFields();
         for (int i = 0; i < menues.Length; i++)
         {
             if (menues[i].activeSelf)
                 prevMenuID = i;
             menues[i].SetActive(false);
         }
-        Debug.Log($"Previous menu:{prevMenuID}\nCurrent menu: {id}");
+        //Debug.Log($"Previous menu:{prevMenuID}\nCurrent menu: {id}");
         menues[id].SetActive(true);
+    }
+    public void ClearFields()
+    {
+        List<TMP_InputField> fields = new List<TMP_InputField>();
+        fields.AddRange(username);
+        fields.AddRange(password);
+        fields.Add(confirm);
+        foreach (var f in fields)
+            f.text = "";
+        DBManager.instance.username = DBManager.instance.password = DBManager.instance.confirm = "";
     }
     #endregion display />
     #endregion menu navigation />
 
     #region Submit
-    public void RegisterSubmit()
-    {
-        DBManager.instance.Register();
-    }
-
-    public void LoginSubmit()
-    {
-        DBManager.instance.Login();
-    }
+    public void RegisterSubmit() => DBManager.instance.Register();
+    public void LoginSubmit() => DBManager.instance.Login();
     #endregion
 
     #region Error:
