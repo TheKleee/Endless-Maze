@@ -1,14 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using MySql.Data.MySqlClient;
 using UnityEngine.SceneManagement;
 using System;
-using TMPro;
-using System.Security.Cryptography;
-using System.Text;
-using UnityEditor.MemoryProfiler;
 using EM_Hashing;
 
 
