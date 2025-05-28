@@ -5727,6 +5727,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1268244780}
   - {fileID: 1821146629}
   - {fileID: 1923113953}
   - {fileID: 1605489761}
@@ -5806,7 +5807,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1821146629}
+  m_Father: {fileID: 1267872779}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5833,9 +5834,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Password taken
+  m_text: 'Lorem ipsum dolor sit amet, consectetur
 
-    Username Taken in the database'
+    adipiscing elit, sed do eiusmod
+    tempor
+
+    incididunt ut labore '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8037,7 +8041,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1268244780}
   - {fileID: 342382740}
   - {fileID: 462077820}
   m_Father: {fileID: 1267872779}
