@@ -15,8 +15,10 @@ public class ButtonPress : MonoBehaviour
 
     public void quitGame(){
         Debug.Log("QUIT");
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
         Application.Quit();
-
-
+#endif
     }
 }

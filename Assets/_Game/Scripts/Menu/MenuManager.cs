@@ -39,7 +39,7 @@ public class MenuManager : MonoBehaviour
     #region Menu Navigation:
     public void Back() => DisplayMenu(prevMenuID);
     public void RegisterMenu() => DisplayMenu(1); //Register -> 1
-    public void Leaderboard() => DisplayMenu(3); //Leaderboard -> 3
+    public void LeaderboardMenu() => DisplayMenu(3); //Leaderboard -> 3
     #region Display
     public void DisplayMenu(int id = 0)
     {

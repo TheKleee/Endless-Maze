@@ -83,10 +83,12 @@ public class DBCon : MonoBehaviour
         (bool check, string e) = DBManager.instance.CheckPassword();
         DBManager.instance.Error(check ? "" : e);
 
-        Debug.Log(DBManager.instance.CheckError() + "\n" + DBManager.instance.error);
-
-        DBManager.instance.Error(DBManager.instance.CheckUsername(IsUsernameTaken(username)));
+        bool isUsernameTaken = IsUsernameTaken(username);
+        DBManager.instance.Error(DBManager.instance.CheckUsername(isUsernameTaken));
         
+        Debug.Log(DBManager.instance.CheckError() + "\n" + DBManager.instance.CheckUsername(isUsernameTaken) + "\n" + isUsernameTaken);
+        
+
         if (DBManager.instance.CheckError())
             return false;
 
@@ -126,7 +128,7 @@ public class DBCon : MonoBehaviour
         {
             command.CommandText = "SELECT Count(*) FROM Players WHERE username=@username";
             command.Parameters.AddWithValue("@username", username);
-            Debug.Log(command.ExecuteScalar());
+            Debug.Log(Convert.ToInt32(command.ExecuteScalar()) > 0);
             return Convert.ToInt32(command.ExecuteScalar()) > 0;
         }
         catch (MySqlException ex)

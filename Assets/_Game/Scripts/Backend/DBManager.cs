@@ -74,7 +74,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     #region Error
     public void Error(string e)
     {
-        error = error.Length > 1 && e == "" ? $"{e}\n" : "";
+        error += e == "" ? "" : $"{e}\n";
         displayError?.Invoke();
     }
     public void Error()
