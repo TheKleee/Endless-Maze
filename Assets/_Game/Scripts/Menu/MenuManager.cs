@@ -13,27 +13,48 @@ public class MenuManager : MonoBehaviour
     [Space, Header("Error:"), SerializeField]
     TextMeshProUGUI error;
     int prevMenuID = 0;
-    
-
-    private void Awake() => DisplayMenu();
+    [Space, Header("Credentials:")]
+    [SerializeField] TMP_InputField[] username = new TMP_InputField[2];
+    [SerializeField] TMP_InputField[] password = new TMP_InputField[2];
+    [SerializeField] TMP_InputField confirm;
 
     private void Start()
     {
+        DisplayMenu();
         DBManager.instance.displayError += DisplayError;
         DBManager.instance.postLogin += Login;
         DBManager.instance.postRegister += Register;
     }
     #region Methods
+
+    public void SetUsername(int id = 0) => DBManager.instance.username = username[id].text;
+    public void SetPassword(int id = 0) => DBManager.instance.password = password[id].text;
+    public void SetConfirm() => DBManager.instance.confirm = confirm.text; //Confirm password
+
     public bool Login()
     {
-        DisplayMenu(2);
-        return true;
+        try
+        {
+            DisplayMenu(2);
+            return true;
+        }
+        catch
+        { 
+            return false;
+        }
     }
 
     public bool Register()
     {
-        DisplayMenu(0);
-        return true;
+        try
+        {
+            DisplayMenu(0);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
     #endregion methods />
 
@@ -44,15 +65,15 @@ public class MenuManager : MonoBehaviour
     #region Display
     public void DisplayMenu(int id = 0)
     {
-        int counter = 0;
-        foreach (var m in menues)
+        DisplayError();
+        for (int i = 0; i < menues.Length; i++)
         {
-            if (m.activeSelf)
-                counter++;
-            m.SetActive(false);
+            if (menues[i].activeSelf)
+                prevMenuID = i;
+            menues[i].SetActive(false);
         }
+        Debug.Log($"Previous menu:{prevMenuID}\nCurrent menu: {id}");
         menues[id].SetActive(true);
-        prevMenuID = counter;
     }
     #endregion display />
     #endregion menu navigation />

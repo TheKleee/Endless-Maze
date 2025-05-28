@@ -4,7 +4,7 @@ public interface IUserManager
 {
     public string username { get; set; }
     public string password { get; set; }
-    public string confrimPassword { get; set; }
+    public string confirm { get; set; }
 
     public (bool, string) CheckPassword();
 }
@@ -44,12 +44,17 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
 {
     #region Singleton
     public static DBManager instance;
-    private void Awake() => instance ??= this;
+    private void Awake()
+    {
+        instance ??= this;
+        DontDestroyOnLoad(gameObject);
+        username = password = confirm = "";
+    }
     #endregion singleton />
 
     public string username { get; set; }
     public string password { get; set; }
-    public string confrimPassword { get; set; }
+    public string confirm { get; set; }
     public int wins { get; set; }
     public int loses { get; set; }
     public string error { get; set; }
@@ -69,7 +74,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     #endregion error />
 
     #region Methods
-    public (bool, string) CheckPassword() => (password == confrimPassword, "Passwords do not match");
+    public (bool, string) CheckPassword() => (password == confirm, "Passwords do not match");
     public string CheckUsername(bool usernameTaken) => usernameTaken ? "Username already exists" : "";
 
     public void Register()
