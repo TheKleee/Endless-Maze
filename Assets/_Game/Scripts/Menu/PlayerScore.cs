@@ -9,7 +9,7 @@ public class PlayerScore : MonoBehaviour
     [SerializeField] TextMeshProUGUI percentage; // wins / (wins+loses) * 100
 
     #region Methods:
-    void CalculatePercentage(int wins, int losses) => percentage.text = losses > 0 ? (wins / (wins + losses) * 100).ToString() : "N/A";
+    void CalculatePercentage(float wins, int losses) => percentage.text = losses > 0 || wins > 0 ? ((int)(wins / (wins + losses) * 100)).ToString() : "N/A";
     public void SetData(PlayerData player)
     {
         username.text = player.username;
