@@ -1,11 +1,14 @@
 using UnityEngine;
 using MEC;
 using System.Collections.Generic;
-using TMP;
+using TMPro;
+
 
 public class MazeDoor : MonoBehaviour
 {
     bool GameOver = false;
+
+    public TextMeshProUGUI timerUI;
 
 
 
@@ -31,6 +34,7 @@ public class MazeDoor : MonoBehaviour
         while (!GameOver)
         {
             time -= .2f;
+            timerUI.text = "Time left:\n" + (int)time;
             yield return Timing.WaitForSeconds(.2f);
 
             if (time <= 0.0f)
