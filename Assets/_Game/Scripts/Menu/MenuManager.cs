@@ -64,13 +64,21 @@ public class MenuManager : MonoBehaviour
             scoreChecked = true; //Ne moramo da cistamo score iz baze svaki put...
         }
         List<PlayerData> pd = DBManager.instance.data;
+        List<PlayerScore> best = new List<PlayerScore>();
         if (pd.Count > 0)
             foreach (PlayerData p in pd) 
             {
                 PlayerScore ps = Instantiate(playerScore).GetComponent<PlayerScore>();
-                ps.transform.SetParent(scoreScroll);
+                ps.transform.SetParent(scoreScroll, false);
                 ps.SetData(p);
+                ps.GetPercentage(p);
+                best.Add(ps);
             }
+
+        //Sortiranje
+        best.Sort((a, b) => b.winPercentage.CompareTo(a.winPercentage));
+        for (int i = 0; i < best.Count; i++)
+            best[i].transform.SetSiblingIndex(i);
     }
     #region Display
     public void DisplayMenu(int id = 0)
