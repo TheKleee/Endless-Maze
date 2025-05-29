@@ -29,6 +29,11 @@ public class MenuManager : MonoBehaviour
     [Header("Submit buttons:"), SerializeField]
     Button[] submitButtons;
 
+    private void Awake()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
     private void Start()
     {
         fields = new TMP_InputField[] { username[0], password[0], username[1], password[1], confirm };

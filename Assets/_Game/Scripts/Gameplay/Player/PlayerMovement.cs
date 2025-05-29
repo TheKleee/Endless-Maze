@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     bool running;
     void Awake()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         curSpeed = startSpeed;
         cam = cam == null ? GetComponentInChildren<Camera>() : cam;
         anim = anim == null ? GetComponentInChildren<Animator>() : anim;
