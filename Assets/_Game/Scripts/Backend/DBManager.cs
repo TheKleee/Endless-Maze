@@ -121,5 +121,15 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public void PlayerDataInit() => readPlayerData?.Invoke();
     #endregion methods />
 
+    public void winner()
+    {
+        Debug.Log("Pobedio si!");
+    }
+
+    public void looser()
+    {
+        Debug.Log("Izgubio si!");
+    }
+
 }
 

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class MazeDoor : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        if (other.GetComponent<PlayerMovement>() == null)
+            return;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var p = other.GetComponent<PlayerMovement>();
+        if (p.hasKey)
+        {
+            DBManager.instance.winner();
+        }
     }
 }
