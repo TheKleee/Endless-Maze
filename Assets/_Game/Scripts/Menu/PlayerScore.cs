@@ -7,6 +7,7 @@ public class PlayerScore : MonoBehaviour
     [SerializeField] TextMeshProUGUI wins;
     [SerializeField] TextMeshProUGUI losses;
     [SerializeField] TextMeshProUGUI percentage; // wins / (wins+loses) * 100
+    [SerializeField] TextMeshProUGUI lastMatch;
     public int winPercentage { get; set; }
 
     #region Methods:
@@ -17,6 +18,7 @@ public class PlayerScore : MonoBehaviour
         wins.text = player.wins.ToString();
         losses.text = player.losses.ToString();
         CalculatePercentage(player.wins, player.losses);
+        lastMatch.text = player.lastMatch.ToString("dd.MM.yyyy");
     }
     public void GetPercentage(PlayerData p)
     {

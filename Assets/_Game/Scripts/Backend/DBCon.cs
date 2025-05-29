@@ -148,7 +148,7 @@ public class DBCon : MonoBehaviour
 
         try
         {
-            command.CommandText = "SELECT username, wins, losses FROM Players";
+            command.CommandText = "SELECT username, wins, losses, matchdate FROM Players";
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -156,7 +156,8 @@ public class DBCon : MonoBehaviour
                 {
                     username = reader.GetString("username"),
                     wins = reader.GetInt32("wins"),
-                    losses = reader.GetInt32("losses")
+                    losses = reader.GetInt32("losses"),
+                    lastMatch = reader.GetDateTime("matchdate"),
                 };
                 DBManager.instance.SetPlayerData(pd);
             }
