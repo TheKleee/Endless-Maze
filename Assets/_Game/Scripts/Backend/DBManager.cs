@@ -126,7 +126,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
         Debug.Log("Pobedio si!");
     }
 
-    public void looser()
+    public void loser()
     {
         Debug.Log("Izgubio si!");
     }
