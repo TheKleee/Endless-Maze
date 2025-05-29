@@ -213,7 +213,6 @@ public class DBCon : MonoBehaviour
     int GetPlayerID()
     {
         string username = DBManager.instance.username;
-        Debug.Log(username);
         using MySqlConnection connection = new MySqlConnection(connectionString);
         connection.Open();
         using MySqlCommand command = connection.CreateCommand();
