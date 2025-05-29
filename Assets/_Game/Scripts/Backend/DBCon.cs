@@ -16,6 +16,8 @@ public class DBCon : MonoBehaviour
         DBManager.instance.registerPlayer += Register;
         DBManager.instance.loginPlayer += Login;
         DBManager.instance.readPlayerData += LeaderboardData;
+        DBManager.instance.win += AddWin;
+        DBManager.instance.lose += AddLoss;
     }
 
     public bool Login()
@@ -161,6 +163,73 @@ public class DBCon : MonoBehaviour
                 };
                 DBManager.instance.SetPlayerData(pd);
             }
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public void AddWin()
+    {
+        int id = GetPlayerID();
+
+        using MySqlConnection connection = new MySqlConnection(connectionString);
+        connection.Open();
+        using MySqlCommand command = connection.CreateCommand();
+
+        try
+        {
+            command.CommandText = "UPDATE Players SET wins = wins + 1 WHERE playerid = @id;";
+            command.Parameters.AddWithValue("@id", id);
+            command.ExecuteNonQuery();
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    public void AddLoss()
+    {
+        int id = GetPlayerID();
+
+        using MySqlConnection connection = new MySqlConnection(connectionString);
+        connection.Open();
+        using MySqlCommand command = connection.CreateCommand();
+
+        try
+        {
+            command.CommandText = "UPDATE Players SET losses = losses + 1 WHERE playerid = @id;";
+            command.Parameters.AddWithValue("@id", id);
+            command.ExecuteNonQuery();
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
+
+    int GetPlayerID()
+    {
+        string username = DBManager.instance.username;
+        Debug.Log(username);
+        using MySqlConnection connection = new MySqlConnection(connectionString);
+        connection.Open();
+        using MySqlCommand command = connection.CreateCommand();
+
+        try
+        {
+            command.CommandText = "SELECT playerid FROM Players WHERE username=@username";
+            command.Parameters.AddWithValue("@username", username);
+            var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                Debug.Log(id);
+                return id;
+            }
+            return -1;
         }
         finally
         {

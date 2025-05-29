@@ -6,11 +6,9 @@ using TMPro;
 
 public class MazeDoor : MonoBehaviour
 {
-    bool GameOver = false;
-
     public TextMeshProUGUI timerUI;
 
-
+    public MazeGoal goal { get; set; }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -18,10 +16,8 @@ public class MazeDoor : MonoBehaviour
             return;
 
         var p = other.GetComponent<PlayerMovement>();
-        if (p.hasKey && !GameOver)
-        {
-            DBManager.instance.winner();
-        }
+        if (p.hasKey && !GameValidator.instance.gameOver)
+            GameValidator.instance.gameOver = true;
     }
 
     void StartTimer()
@@ -31,17 +27,22 @@ public class MazeDoor : MonoBehaviour
     IEnumerator<float> CheckTimer()
     {
         float time = 120f;
-        while (!GameOver)
+        while (!GameValidator.instance.gameOver)
         {
-            time -= .2f;
-            timerUI.text = "Time left:\n" + (int)time;
+            if(GameValidator.instance.gameStarted)
+            {
+                time -= .2f;
+                int t = Mathf.CeilToInt(time);
+                int min = t / 60;
+                int sec = t % 60;
+                timerUI.text = $"Time left:\n{min}:{(sec > 9 ? sec : $"0{sec}")}";
+
+                if (time <= 0.0f)
+                    GameValidator.instance.gameOver = true;
+            }
             yield return Timing.WaitForSeconds(.2f);
-
-            if (time <= 0.0f)
-                GameOver = true;
         }
-
-        DBManager.instance.loser();
+        goal.ShowGameOverMenu(time);
     }
 
     void Start()

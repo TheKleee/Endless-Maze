@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;
 
     public bool hasKey { get; private set; }
-    bool startMoving;
+    bool startMoving, gameOver;
     [SerializeField, Range(0.2f, 5.0f)] float startSpeed = 1f;
     [SerializeField] float maxSpeed = 15.0f;
 
@@ -39,12 +39,18 @@ public class PlayerMovement : MonoBehaviour
         if (!startMoving)
         {
             if (Input.anyKey)
-                startMoving = true;
+                GameValidator.instance.gameStarted = startMoving = true;
 
             return;
         }
 
-        Move();
+        if (!GameValidator.instance.gameOver) Move();
+        else if (!gameOver)
+        {
+            gameOver = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
         cam.fieldOfView = PercentageLock.instance.ReadPercentageLock(60, 90);
     }
 

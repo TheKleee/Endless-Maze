@@ -95,15 +95,17 @@ public class MenuManager : MonoBehaviour
             if (id == 0 || id == 1)
                 id = 2;
 
-        DisplayError();
-        ClearFields();
+        if (!DBManager.instance.loggedIn)
+        {
+            DisplayError();
+            ClearFields();
+        }
         for (int i = 0; i < menues.Length; i++)
         {
             if (menues[i].activeSelf)
                 prevMenuID = i;
             menues[i].SetActive(false);
         }
-        //Debug.Log($"Previous menu:{prevMenuID}\nCurrent menu: {id}");
         menues[id].SetActive(true);
     }
     public void ClearFields()

@@ -23,7 +23,12 @@ public interface IDBError
 public interface IScoreManager
 {
     public int wins { get; set; }
-    public int loses { get; set; }
+    public int losses { get; set; }
+
+    public delegate void Win();
+    public event Win win;
+    public delegate void Lose();
+    public event Lose lose;
 }
 
 public interface IRegisterManager
@@ -77,7 +82,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public string password { get; set; }
     public string confirm { get; set; }
     public int wins { get; set; }
-    public int loses { get; set; }
+    public int losses { get; set; }
     public string error { get; set; }
     public List<PlayerData> data { get; set; }
     public bool loggedIn { get; set; }
@@ -88,6 +93,8 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public event IRegisterManager.PostRegister postRegister;
     public event ILoginManager.PostLogin postLogin;
     public event IPlayerData.ReadPlayerData readPlayerData;
+    public event IScoreManager.Win win;
+    public event IScoreManager.Lose lose;
 
     #region Error
     public void Error(string e)
@@ -129,11 +136,15 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public void winner()
     {
         Debug.Log("Pobedio si!");
+        //Win logic...
+        win?.Invoke();
     }
 
     public void loser()
     {
         Debug.Log("Izgubio si!");
+        //Lose logic
+        lose?.Invoke();
     }
 
 }
