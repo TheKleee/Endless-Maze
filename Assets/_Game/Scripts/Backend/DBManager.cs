@@ -42,6 +42,7 @@ public interface ILoginManager
     public delegate void PostLogin();
     public event PostLogin postLogin;
     public void Login();
+    public bool loggedIn { get; set; }
 }
 
 public interface IPlayerData
@@ -79,6 +80,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public int loses { get; set; }
     public string error { get; set; }
     public List<PlayerData> data { get; set; }
+    public bool loggedIn { get; set; }
 
     public event IDBError.DisplayError displayError;
     public event IRegisterManager.RegisterPlayer registerPlayer;
@@ -113,8 +115,11 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     }
     public void Login()
     {
-        bool login = (bool)loginPlayer?.Invoke();
-        if (login) postLogin?.Invoke();
+        if(!loggedIn)
+        {
+            bool login = (bool)loginPlayer?.Invoke();
+            if (login) postLogin?.Invoke();
+        }
     }
     public void ClearPlayerData() => data.Clear();
     public void SetPlayerData(PlayerData pd) => data.Add(pd);

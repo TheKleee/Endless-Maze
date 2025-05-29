@@ -490,6 +490,10 @@ MonoBehaviour:
   losses: {fileID: 5654430400075248146}
   percentage: {fileID: 2411797488453660688}
   lastMatch: {fileID: 7374484748419322537}
+  perCol:
+  - {r: 0.62473303, g: 0.9528302, b: 0.6568295, a: 1}
+  - {r: 0.9529412, g: 0.69231504, b: 0.62352943, a: 1}
+  perColImg: {fileID: 6900772761327369727}
 --- !u!1 &2957899942461729638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1378,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 2
-    m_Bottom: 0
+    m_Bottom: 2
   m_ChildAlignment: 3
   m_Spacing: 0
   m_ChildForceExpandWidth: 0

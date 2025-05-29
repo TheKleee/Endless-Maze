@@ -28,6 +28,8 @@ public class MenuManager : MonoBehaviour
     [Space]
     [Header("Submit buttons:"), SerializeField]
     Button[] submitButtons;
+    [Header("Back buttons:"), SerializeField]
+    Button[] backButtons;
 
     private void Awake()
     {
@@ -48,7 +50,11 @@ public class MenuManager : MonoBehaviour
     public void SetPassword(int id = 0) => DBManager.instance.password = password[id].text;
     public void SetConfirm() => DBManager.instance.confirm = confirm.text; //Confirm password
 
-    public void Login() => DisplayMenu(2);
+    public void Login()
+    {
+        DBManager.instance.loggedIn = true;
+        DisplayMenu(2);
+    }
     public void Register() => DisplayMenu(0);
     #endregion methods />
 
@@ -60,30 +66,35 @@ public class MenuManager : MonoBehaviour
         DisplayMenu(3); //Leaderboard -> 3
         if (!scoreChecked)
         {
-            DBManager.instance.PlayerDataInit();
             scoreChecked = true; //Ne moramo da cistamo score iz baze svaki put...
-        }
-        List<PlayerData> pd = DBManager.instance.data;
-        List<PlayerScore> best = new List<PlayerScore>();
-        if (pd.Count > 0)
-            foreach (PlayerData p in pd) 
-            {
-                PlayerScore ps = Instantiate(playerScore).GetComponent<PlayerScore>();
-                ps.transform.SetParent(scoreScroll, false);
-                ps.SetData(p);
-                ps.GetPercentage(p);
-                best.Add(ps);
-            }
+            DBManager.instance.PlayerDataInit();
+        
+            List<PlayerData> pd = DBManager.instance.data;
+            List<PlayerScore> best = new List<PlayerScore>();
+            if (pd.Count > 0)
+                foreach (PlayerData p in pd) 
+                {
+                    PlayerScore ps = Instantiate(playerScore).GetComponent<PlayerScore>();
+                    ps.transform.SetParent(scoreScroll, false);
+                    ps.SetData(p);
+                    ps.GetPercentage(p);
+                    best.Add(ps);
+                }
 
-        //Sortiranje
-        best.Sort((a, b) => b.winPercentage.CompareTo(a.winPercentage));
-        for (int i = 0; i < best.Count; i++)
-            best[i].transform.SetSiblingIndex(i);
+            //Sortiranje
+            best.Sort((a, b) => b.winPercentage.CompareTo(a.winPercentage));
+            for (int i = 0; i < best.Count; i++)
+                best[i].transform.SetSiblingIndex(i);
+        }
     }
     #region Display
     public void DisplayMenu(int id = 0)
     {
         DBManager.instance.Error();
+        if (DBManager.instance.loggedIn)
+            if (id == 0 || id == 1)
+                id = 2;
+
         DisplayError();
         ClearFields();
         for (int i = 0; i < menues.Length; i++)
@@ -153,14 +164,20 @@ public class MenuManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
-        {
             foreach (var btn in submitButtons)
                 if (btn.gameObject.activeInHierarchy && btn.interactable)
                 {
                     btn.onClick.Invoke();
                     break;
                 }
-        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+            foreach (var btn in backButtons)
+                if (btn.gameObject.activeInHierarchy && btn.interactable)
+                {
+                    btn.onClick.Invoke();
+                    break;
+                }
     }
     #endregion menu controls />
 }

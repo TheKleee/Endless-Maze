@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487f5ab48655d5340b25472f61eb4159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeDoor: {fileID: 3767004606336358370, guid: d420fd8443db522499d21bfb80a0fa52, type: 3}
+  timerUI: {fileID: 0}
+  mazeDoor: {fileID: 3418334398354580298, guid: d420fd8443db522499d21bfb80a0fa52, type: 3}
   mazeKey: {fileID: -1481289036278870754, guid: a440f4de5a77ace47802e6b64e261c38, type: 3}
 --- !u!1001 &3617771755555551479
 PrefabInstance:
