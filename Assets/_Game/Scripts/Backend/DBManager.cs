@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 public interface IUserManager
 {
@@ -42,7 +44,17 @@ public interface ILoginManager
     public void Login();
 }
 
-public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, IRegisterManager, ILoginManager
+public interface IPlayerData
+{
+    public List<PlayerData> data { get; set; }
+    public delegate void ReadPlayerData();
+    public event ReadPlayerData readPlayerData;
+    public void ClearPlayerData();
+    public void SetPlayerData(PlayerData pd);
+    public void PlayerDataInit();
+}
+
+public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, IRegisterManager, ILoginManager, IPlayerData
 {
     #region Singleton
     public static DBManager instance;
@@ -53,6 +65,7 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
             instance = this;
             DontDestroyOnLoad(gameObject);
             username = password = confirm = "";
+            data = new List<PlayerData>();
             return;
         }
         Destroy(gameObject);
@@ -65,11 +78,14 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
     public int wins { get; set; }
     public int loses { get; set; }
     public string error { get; set; }
+    public List<PlayerData> data { get; set; }
+
     public event IDBError.DisplayError displayError;
     public event IRegisterManager.RegisterPlayer registerPlayer;
     public event ILoginManager.LoginPlayer loginPlayer;
     public event IRegisterManager.PostRegister postRegister;
     public event ILoginManager.PostLogin postLogin;
+    public event IPlayerData.ReadPlayerData readPlayerData;
 
     #region Error
     public void Error(string e)
@@ -100,7 +116,9 @@ public class DBManager : MonoBehaviour, IUserManager, IDBError, IScoreManager, I
         bool login = (bool)loginPlayer?.Invoke();
         if (login) postLogin?.Invoke();
     }
-    
+    public void ClearPlayerData() => data.Clear();
+    public void SetPlayerData(PlayerData pd) => data.Add(pd);
+    public void PlayerDataInit() => readPlayerData?.Invoke();
     #endregion methods />
 
 }

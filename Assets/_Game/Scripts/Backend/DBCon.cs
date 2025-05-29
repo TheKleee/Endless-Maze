@@ -15,6 +15,7 @@ public class DBCon : MonoBehaviour
         connectionString = "Server=localhost;Database=EndlessMaze;User ID=root;Pooling=false;";
         DBManager.instance.registerPlayer += Register;
         DBManager.instance.loginPlayer += Login;
+        DBManager.instance.readPlayerData += LeaderboardData;
     }
 
     public bool Login()
@@ -86,9 +87,6 @@ public class DBCon : MonoBehaviour
         bool isUsernameTaken = IsUsernameTaken(username);
         DBManager.instance.Error(DBManager.instance.CheckUsername(isUsernameTaken));
         
-        Debug.Log(DBManager.instance.CheckError() + "\n" + DBManager.instance.CheckUsername(isUsernameTaken) + "\n" + isUsernameTaken);
-        
-
         if (DBManager.instance.CheckError())
             return false;
 
@@ -128,7 +126,6 @@ public class DBCon : MonoBehaviour
         {
             command.CommandText = "SELECT Count(*) FROM Players WHERE username=@username";
             command.Parameters.AddWithValue("@username", username);
-            Debug.Log(Convert.ToInt32(command.ExecuteScalar()) > 0);
             return Convert.ToInt32(command.ExecuteScalar()) > 0;
         }
         catch (MySqlException ex)
@@ -142,5 +139,31 @@ public class DBCon : MonoBehaviour
         }
     }
 
+    public void LeaderboardData()
+    {
+        DBManager.instance.ClearPlayerData();
+        using MySqlConnection connection = new MySqlConnection(connectionString);
+        connection.Open();
+        using MySqlCommand command = connection.CreateCommand();
 
+        try
+        {
+            command.CommandText = "SELECT username, wins, losses FROM Players";
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                PlayerData pd = new PlayerData()
+                {
+                    username = reader.GetString("username"),
+                    wins = reader.GetInt32("wins"),
+                    losses = reader.GetInt32("losses")
+                };
+                DBManager.instance.SetPlayerData(pd);
+            }
+        }
+        finally
+        {
+            connection.Close();
+        }
+    }
 }
